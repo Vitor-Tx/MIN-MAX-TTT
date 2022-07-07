@@ -21,11 +21,11 @@ while (verifyVictoryCondiction(board) == -1):            # -1 = Condição de Vi
     printBoard(board)                                    
     selectedPosition = None                              
     if (player == 0):                                    #vez do X, que em uma malha vazia, é o primeiro a jogar. Consequentemente, será nosso MAX.
-        print("Vez de:", MAX_TOKEN)
-        selectedPosition = automaticMove(board, player)  #função usada quando se quer que um jogador seja a máquina.
-        #selectedPosition = getSelectedPosition(board)   #função usada quando se quer que o jogador seja o usuário.
+        print("Vez de:", dictionary["X"])
+        #selectedPosition = automaticMove(board, player) #função usada quando se quer que um jogador seja a máquina.
+        selectedPosition = getSelectedPosition(board)    #função usada quando se quer que o jogador seja o usuário.
     elif (player == 1):                                  #Vez do O, nosso MIN.
-        print("Vez de:", MIN_TOKEN)
+        print("Vez de:", dictionary["O"])
         selectedPosition = automaticMove(board, player)  
         #selectedPosition = getSelectedPosition(board)
     doMove(board, selectedPosition[0], selectedPosition[1], player)     #selectedPosition[0] = linha, selectedPosition[1] = coluna.
@@ -36,6 +36,6 @@ printBoard(board)                                        #Após verifyVictoryCon
 if (verifyVictoryCondiction(board) == 0):                #Em caso de empate.
     print("EMPATE")
 elif (player == 0):                                     
-    print("Vencedor:", MAX_TOKEN)                        #Em caso de X ser vitorioso.
+    print("Vencedor:", dictionary["X"])                        #Em caso de X ser vitorioso.
 else:
-    print("Vencedor:", MIN_TOKEN)                        #Em caso de O ser vitorioso.
+    print("Vencedor:", dictionary["O"])                        #Em caso de O ser vitorioso.

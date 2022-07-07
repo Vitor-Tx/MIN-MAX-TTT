@@ -1,4 +1,4 @@
-#MiniMax Algorithm with Alpha-Beta Pruning!             #   
+#Algoritmo Minimax com Poda Alfa-Beta                   #   
                                                         #
 #Made by:                                               #
 #Gabriel Dal Belo Gomes Santos                          #
@@ -7,7 +7,7 @@
                                                         #
 #########################################################
 
-from TTT import dictionary, BLANKSPACE, MAX_TOKEN, MIN_TOKEN, verifyVictoryCondiction
+from TTT import dictionary, verifyVictoryCondiction
 import time
 
 MAX = 10000

@@ -9,10 +9,6 @@
 
 import math
 
-BLANKSPACE = "   "
-MAX_TOKEN = " X "
-MIN_TOKEN = " O "
-
 dictionary = {          
     "X": " X ",
     "O": " O ",
@@ -38,12 +34,6 @@ def createBoard():
     amounts["X"] = 0
     amounts["O"] = 0
     amounts["W"] = 0
-
-    #regras que devem ser respeitas para garantir que o dado tabuleiro seja válido e coeso.
-    first = (amounts["X"] < 6) and (amounts["O"] < 5)
-    second = amounts["O"] == (amounts["X"] - 1)
-    third = (amounts["X"] == amounts["O"]) and (amounts["X"] < 5)
-    fourth = (second and (not third)) or ((not second) and third)   #second xor third
     isValid = False         #variável cujo valor é trocado quando se garante que o tabuleiro é válido e coeso.
     
     while (isValid == False):
@@ -60,6 +50,13 @@ def createBoard():
                     amounts["O"] += 1
                 else:
                     amounts["W"] += 1
+
+        #regras que devem ser respeitas para garantir que o dado tabuleiro seja válido e coeso.
+        first = (amounts["X"] < 6) and (amounts["O"] < 5)
+        second = amounts["O"] == (amounts["X"] - 1)
+        third = (amounts["X"] == amounts["O"]) and (amounts["X"] < 5)
+        fourth = (second and (not third)) or ((not second) and third)   #second xor third
+        
                     
         if (first and fourth):      #se essas duas condições forem verdadeiras, é um tabuleiro válido, e o preenchimento está completo.
             isValid = True
@@ -94,30 +91,30 @@ def getSelectedPosition(board): #Converte os valores obtidos na função anterio
     while(1):
         selectedLine = getValidInput("Insira o número da linha (1, 2 ou 3): ")
         selectedColumn = getValidInput("Insira o número da coluna (1, 2 or 3): ")
-        if(board[selectedLine][selectedColumn] == BLANKSPACE):
+        if(board[selectedLine][selectedColumn] == dictionary["W"]):
             return selectedLine, selectedColumn
         else:
             print("Esta posição já está sendo utilizada! tente novamente.")
 
 def doMove(board, selectedLine, selectedColumn, player):    #Faz a jogada utilizando a posição obtida pela função anterior.
     if (player == 0):
-        board[selectedLine][selectedColumn] = MAX_TOKEN
+        board[selectedLine][selectedColumn] = dictionary["X"]
     else:
-        board[selectedLine][selectedColumn] = MIN_TOKEN
+        board[selectedLine][selectedColumn] = dictionary["O"]
 
 def verifyVictoryCondiction(board): #Função usada á cada jogada para verificar o estado do jogo.
     for i in range(3):              # 1 = Vitória alcançada, independente do jogador
-        if ((board[i][0] != BLANKSPACE) and (board[i][0] == board[i][1] == board[i][2])):   #verifica se há uma trinca de tokens iguais em alguma linha.
+        if ((board[i][0] != dictionary["W"]) and (board[i][0] == board[i][1] == board[i][2])):   #verifica se há uma trinca de tokens iguais em alguma linha.
             return 1
-        if ((board[0][i] != BLANKSPACE) and (board[0][i] == board[1][i] == board[2][i])):   #verifica se há uma trinca de tokens iguais em alguma coluna.
+        if ((board[0][i] != dictionary["W"]) and (board[0][i] == board[1][i] == board[2][i])):   #verifica se há uma trinca de tokens iguais em alguma coluna.
             return 1
-    if ((board[0][0] != BLANKSPACE) and (board[0][0] == board[1][1] == board[2][2])):       #verifica se há uma trinca de tokens iguais na diagonal principal.
+    if ((board[0][0] != dictionary["W"]) and (board[0][0] == board[1][1] == board[2][2])):       #verifica se há uma trinca de tokens iguais na diagonal principal.
         return 1
-    if ((board[0][2] != BLANKSPACE) and (board[0][2] == board[1][1] == board[2][0])):       #verifica se há uma trinca de tokens iguais na diagonal oposta.
+    if ((board[0][2] != dictionary["W"]) and (board[0][2] == board[1][1] == board[2][0])):       #verifica se há uma trinca de tokens iguais na diagonal oposta.
         return 1
 
     for i in range(3):
         for j in range(3):
-            if(board[i][j] == BLANKSPACE):
+            if(board[i][j] == dictionary["W"]):
                 return -1       # -1 = Há pelo menos uma posição em branco ainda. Logo, o jogo ainda se encontra em andamento.
     return 0                    # 0 = Empate, a famosa "Velha"

@@ -1,6 +1,6 @@
-#TicTacToe with MiniMax Algotithm and Alfa-Beta Pruning!#   
+#Jogo da Velha com algoritmo Minimax e Poda Alfa-Beta!  #   
                                                         #
-#Made by:                                               #
+#Um trabalho de:                                        #
 #Gabriel Dal Belo Gomes Santos                          #
 #Henrique Tornelli Duarte                               #
 #Vitor Teixeira                                         #
@@ -9,32 +9,33 @@
 from TTT import * 
 from MM import automaticMove
 
-board, amounts = createBoard()
-player = None                                            # 0 = X, 1 = 0
-if (amounts["X"] == amounts["O"]):
-    player = 0                                               
+board, amounts = createBoard()                           #função responsável por criar o tabuleiro de acordo com a especificação do usuário, e retorna não só ele...
+                                                         #... como também a a quantidade de X, O e espaços em branco.
+player = None                                            #variável que associa um valor á cada jogador. 0 = X, 1 = O.
+if (amounts["X"] == amounts["O"]):                       #como X é o primeiro jogador, se a quantidade de X for igual a de O...
+    player = 0                                           #...X é o próximo a jogar...
 else:
-    player = 1
+    player = 1                                           #... se não, a quantidade de X será maior. Logo, O será o próximo a jogar.
 
 while (verifyVictoryCondiction(board) == -1):            # -1 = Condição de Vitória ainda não alcançada. 1 = Vitória, 0 = Empate.
     printBoard(board)                                    
     selectedPosition = None                              
-    if (player == 0):                                    #Vez do X, que é o primeiro a jogar, e também será nosso MAX.
-        print("Turn:", MAX_TOKEN)
-        selectedPosition = automaticMove(board, player)  #usada quando se quer que o respectivo jogador seja a máquina.
-        #selectedPosition = getSelectedPosition(board)   #usada quando se quer que o respectivo jogador seja o usuário.
+    if (player == 0):                                    #vez do X, que em uma malha vazia, é o primeiro a jogar. Consequentemente, será nosso MAX.
+        print("Vez de:", MAX_TOKEN)
+        selectedPosition = automaticMove(board, player)  #função usada quando se quer que um jogador seja a máquina.
+        #selectedPosition = getSelectedPosition(board)   #função usada quando se quer que o jogador seja o usuário.
     elif (player == 1):                                  #Vez do O, nosso MIN.
-        print("Turn:", MIN_TOKEN)
+        print("Vez de:", MIN_TOKEN)
         selectedPosition = automaticMove(board, player)  
         #selectedPosition = getSelectedPosition(board)
     doMove(board, selectedPosition[0], selectedPosition[1], player)     #selectedPosition[0] = linha, selectedPosition[1] = coluna.
-    if (verifyVictoryCondiction(board) == -1):
+    if (verifyVictoryCondiction(board) == -1):           #Enquanto não for alcançada a Vitória ou o Empate, realizará a troca de jogador após uma jogada.
         player = (player + 1)%2                          #Macete para trocar o jogador. O resultado uma vez será 1, na outra 0, e assim por diante.
     
-printBoard(board)                                        #Após verifyVictoryCondiction retornar 1 ou 0, printa o tabuleiro e o resultado
-if (verifyVictoryCondiction(board) == 0):               
-    print("Winner: DRAW")
+printBoard(board)                                        #Após verifyVictoryCondiction retornar 1 ou 0, printa o tabuleiro e o resultado.
+if (verifyVictoryCondiction(board) == 0):                #Em caso de empate.
+    print("EMPATE")
 elif (player == 0):                                     
-    print("Winner:", MAX_TOKEN)                         
+    print("Vencedor:", MAX_TOKEN)                        #Em caso de X ser vitorioso.
 else:
-    print("Winner:", MIN_TOKEN)
+    print("Vencedor:", MIN_TOKEN)                        #Em caso de O ser vitorioso.

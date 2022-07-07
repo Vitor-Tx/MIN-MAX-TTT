@@ -12,18 +12,25 @@ from MM import automaticMove
 board, amounts = createBoard()                           #função responsável por criar o tabuleiro de acordo com a especificação do usuário, e retorna não só ele...
                                                          #... como também a a quantidade de X, O e espaços em branco.
 player = None                                            #variável que associa um valor á cada jogador. 0 = X, 1 = O.
-if (amounts["X"] == amounts["O"]):                       #como X é o primeiro jogador, se a quantidade de X for igual a de O...
-    player = 0                                           #...X é o próximo a jogar...
+if (amounts["X"] == amounts["O"]):                       
+    if (verifyVictoryCondiction(board) == 1):
+        player = 1
+    else:
+        player = 0
 else:
-    player = 1                                           #... se não, a quantidade de X será maior. Logo, O será o próximo a jogar.
+    if (verifyVictoryCondiction(board) == 1):
+        player = 0
+    else:
+        player = 1
 
 while (verifyVictoryCondiction(board) == -1):            # -1 = Condição de Vitória ainda não alcançada. 1 = Vitória, 0 = Empate.
     printBoard(board)                                    
     selectedPosition = None                              
     if (player == 0):                                    #vez do X, que em uma malha vazia, é o primeiro a jogar. Consequentemente, será nosso MAX.
         print("Vez de:", dictionary["X"])
-        #selectedPosition = automaticMove(board, player) #função usada quando se quer que um jogador seja a máquina.
-        selectedPosition = getSelectedPosition(board)    #função usada quando se quer que o jogador seja o usuário.
+        #Nas duas linhas seguintes, apenas uma deve permanecer comentada. Em caso de troca, comentar a outra. O mesmo vale dentro do próximo "elif"
+        selectedPosition = automaticMove(board, player) #função usada quando se quer que um jogador seja a máquina.
+        #selectedPosition = getSelectedPosition(board)    #função usada quando se quer que o jogador seja o usuário.
     elif (player == 1):                                  #Vez do O, nosso MIN.
         print("Vez de:", dictionary["O"])
         selectedPosition = automaticMove(board, player)  

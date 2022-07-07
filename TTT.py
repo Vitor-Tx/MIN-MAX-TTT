@@ -27,8 +27,7 @@ def createBoard():
     #tabuleiro vazio.
     board = [[dictionary["W"], dictionary["W"], dictionary["W"]],
             [dictionary["W"], dictionary["W"], dictionary["W"]],
-            [dictionary["W"], dictionary["W"], dictionary["W"]]
-    ]
+            [dictionary["W"], dictionary["W"], dictionary["W"]]]
 
     amounts = {}
     amounts["X"] = 0
@@ -50,14 +49,11 @@ def createBoard():
                     amounts["O"] += 1
                 else:
                     amounts["W"] += 1
-
         #regras que devem ser respeitas para garantir que o dado tabuleiro seja válido e coeso.
         first = (amounts["X"] < 6) and (amounts["O"] < 5)
         second = amounts["O"] == (amounts["X"] - 1)
         third = (amounts["X"] == amounts["O"]) and (amounts["X"] < 5)
         fourth = (second and (not third)) or ((not second) and third)   #second xor third
-        
-                    
         if (first and fourth):      #se essas duas condições forem verdadeiras, é um tabuleiro válido, e o preenchimento está completo.
             isValid = True
         else:
